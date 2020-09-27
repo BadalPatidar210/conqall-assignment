@@ -1,0 +1,6 @@
+.table-component {
+  display: flex;
+}
+.table-heading {
+  align-items: center;
+}

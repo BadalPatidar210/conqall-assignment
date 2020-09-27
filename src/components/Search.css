@@ -1,0 +1,10 @@
+.search-component {
+  display: flex;
+}
+.search-body > label {
+  align-items: center;
+  margin-right: 1rem;
+}
+.add-city {
+  justify-content: flex-end;
+}
