@@ -8,6 +8,12 @@ import {
   SHORTLISTED_LIST_REQUEST,
   SHORTLISTED_LIST_SUCCESS,
   SHORTLISTED_LIST_FAIL,
+  REMOVE_SHORTLISTED_REQUEST,
+  REMOVE_SHORTLISTED_SUCCESS,
+  REMOVE_SHORTLISTED_FAIL,
+  SORTED_LIST_REQUEST,
+  SORTED_LIST_SUCCESS,
+  SORTED_LIST_FAIL,
 } from "../constants/objectsConstant";
 import {
   OBJECT_SHORTLIST_REQUEST,
@@ -79,9 +85,49 @@ function shortlistedListReducer(state = { shortlistedObjects: [] }, action) {
   }
 }
 
+function removeShortlistedReducer(
+  state = { updatedShortlistedObjects: [] },
+  action
+) {
+  switch (action.type) {
+    case REMOVE_SHORTLISTED_REQUEST:
+      return { ...state, loadingShortlisted: true };
+    case REMOVE_SHORTLISTED_SUCCESS:
+      return {
+        ...state,
+        loadingShortlisted: false,
+        updatedShortlistedObjects: action.payload,
+      };
+    case REMOVE_SHORTLISTED_FAIL:
+      return {
+        ...state,
+        loadingShortlisted: false,
+        errorShortlisted: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
+function sortedListReducer(state = { sortedResultList: [] }, action) {
+  switch (action.type) {
+    case SORTED_LIST_REQUEST:
+      return { ...state, loading: true };
+    case SORTED_LIST_SUCCESS:
+      console.log(action.payload);
+      return { ...state, loading: false, sortedResultList: action.payload };
+    case SORTED_LIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
 export {
   objectsListReducer,
   objectsDeleteReducer,
   shortlistedListReducer,
   shortlistedReducer,
+  removeShortlistedReducer,
+  sortedListReducer,
 };

@@ -14,6 +14,9 @@ import {
   SHORTLISTED_LIST_REQUEST,
   SHORTLISTED_LIST_SUCCESS,
   SHORTLISTED_LIST_FAIL,
+  SORTED_LIST_REQUEST,
+  SORTED_LIST_SUCCESS,
+  SORTED_LIST_FAIL,
 } from "../constants/objectsConstant";
 import axios from "axios";
 
@@ -31,13 +34,25 @@ const listObjects = () => async (dispatch) => {
 
 const deleteObject = (objectId) => (dispatch, getState) => {
   try {
-    const { objectsList } = getState();
+    const { objectsList, updatedList, shortlistedList } = getState();
     dispatch({ type: OBJECT_DELETE_REQUEST, payload: objectId });
     let tempList = objectsList.objects.filter((elem) => {
       return elem.City !== objectId;
     });
+    let uList = shortlistedList.shortlistedObjects.filter((elem) => {
+      return elem.City !== objectId;
+    });
+    updatedList.updatedObjects = tempList;
+    shortlistedList.shortlistedObjects = uList;
     objectsList.objects = tempList;
-    dispatch({ type: OBJECT_DELETE_SUCCESS, payload: objectsList.objects });
+    dispatch({
+      type: OBJECT_DELETE_SUCCESS,
+      payload: [
+        objectsList.objects,
+        shortlistedList.shortlistedObjects,
+        updatedList.updatedObjects,
+      ],
+    });
   } catch (error) {
     dispatch({ type: OBJECT_DELETE_FAIL, payload: error.message });
   }
@@ -46,7 +61,6 @@ const deleteObject = (objectId) => (dispatch, getState) => {
 const shortlistObject = (object) => (dispatch, getState) => {
   try {
     const { objectsList, shortlistedList } = getState();
-    console.log(shortlistedList);
     dispatch({ type: OBJECT_SHORTLIST_REQUEST, payload: object });
     objectsList.objects.map((elem) => {
       if (elem === object)
@@ -66,7 +80,6 @@ const listShorlistedObjects = () => (dispatch, getState) => {
   try {
     const { shortlistedList } = getState();
     dispatch({ type: SHORTLISTED_LIST_REQUEST });
-    console.log(shortlistedList.shortlistedObjects);
     dispatch({
       type: SHORTLISTED_LIST_SUCCESS,
       payload: shortlistedList.shortlistedObjects,
@@ -83,7 +96,6 @@ const removeShortlistObject = (objectId) => (dispatch, getState) => {
     let data = shortlistedList.shortlistedObjects.filter((elem) => {
       return elem.City !== objectId;
     });
-    // console.log(data + "daata mila");
     shortlistedList.shortlistedObjects = data;
     dispatch({
       type: REMOVE_SHORTLIST_SUCCESS,
@@ -93,10 +105,25 @@ const removeShortlistObject = (objectId) => (dispatch, getState) => {
     dispatch({ type: REMOVE_SHORTLIST_FAIL, error: error.message });
   }
 };
+
+const sortedResultList = (value) => (dispatch, getState) => {
+  try {
+    const { objectsList } = getState();
+    dispatch({ type: SORTED_LIST_REQUEST, payload: value });
+    const tempList = objectsList.objects.filter((elem) => {
+      return elem.City === value;
+    });
+    objectsList.objects = tempList;
+    dispatch({ type: SORTED_LIST_SUCCESS, payload: objectsList.objects });
+  } catch (error) {
+    dispatch({ type: SORTED_LIST_FAIL, error: error.message });
+  }
+};
 export {
   listObjects,
   deleteObject,
   shortlistObject,
   removeShortlistObject,
   listShorlistedObjects,
+  sortedResultList,
 };

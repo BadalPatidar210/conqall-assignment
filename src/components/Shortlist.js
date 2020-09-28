@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./Table.css";
+import "./Shortlist.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeShortlistObject,
@@ -7,23 +7,23 @@ import {
 } from "../actions/objectActions";
 function Shortlist() {
   const shortlistedList = useSelector((state) => state.shortlistedList);
-  const shortlist = useSelector((state) => state.shortlist);
+  const sortedList = useSelector((state) => state.sortedList);
   const { loading, shortlistedObjects, error } = shortlistedList;
   const dispatch = useDispatch();
   useEffect(() => {
-    listShorlistedObjects();
+    if (shortlistedObjects.length === 0) listShorlistedObjects();
   }, []);
   const removeShortlistHandler = (object) => {
     dispatch(removeShortlistObject(object.City));
   };
   return (
-    <div className="table-component">
+    <div className="table-shortlist-component">
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <div>{error.message}</div>
-      ) : shortlistedObjects ? (
-        <table className="table">
+      ) : shortlistedList ? (
+        <table className="table-heading">
           <thead>
             <tr>
               <th>State</th>
@@ -33,8 +33,8 @@ function Shortlist() {
             </tr>
           </thead>
           <tbody>
-            {shortlistedObjects.map((object) => (
-              <tr key={object._id}>
+            {shortlistedObjects.map((object, index) => (
+              <tr key={index}>
                 <td>{object.State}</td>
                 <td>{object.District}</td>
                 <td>{object.City}</td>

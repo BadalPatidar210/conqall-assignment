@@ -1,0 +1,9 @@
+.table-shortlist-component {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 30rem;
+}
+.table-heading {
+  align-items: center;
+}

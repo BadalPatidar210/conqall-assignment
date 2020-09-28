@@ -1,10 +1,25 @@
-.search-component {
-  display: flex;
+.search-component > form {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 0.4rem;
 }
-.search-body > label {
+
+.search-body {
+  display: flex;
   align-items: center;
   margin-right: 1rem;
+  margin-bottom: 1rem;
 }
-.add-city {
-  justify-content: flex-end;
+.search-city {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.6rem;
+}
+
+.search-city > Input {
+  outline-width: 0;
+  color: aqua;
 }

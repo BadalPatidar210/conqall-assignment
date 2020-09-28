@@ -1,33 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "@material-ui/core";
-import { Button } from "@material-ui/core";
 import "./Search.css";
+import { useDispatch, useSelector } from "react-redux";
+import { sortedResultList } from "../actions/objectActions";
 
 function Search() {
-  const inputHandler = (e) => {
+  const sortedList = useSelector((state) => state.sortedList);
+  const dispatch = useDispatch();
+  const [value, setValue] = useState("");
+  // const addHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log(e.currentTarget);
+  //   // dispatch(searchByCity())
+  // };
+  const formHandler = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
-  };
-  const addHandler = (e) => {
-    e.preventDefault();
-    console.log(e.currentTarget);
-    // dispatch(searchByCity())
-  };
-  const searchHandler = (e) => {
-    console.log(e.currentTarget.value);
+    dispatch(sortedResultList(value));
+    // console.log(value);
   };
   return (
     <div className="search-component">
-      <div className="search-body">
-        <label>Search</label>
-        <Input onChange={(e) => inputHandler(e)} />
-      </div>
-      <div className="search-city">
-        <Button onClick={searchHandler}>Search</Button>
-      </div>
-      <div className="add-city">
+      <form onSubmit={formHandler}>
+        <div className="search-body">
+          <label>Search</label>
+          <Input value={value} onChange={(e) => setValue(e.target.value)} />
+        </div>
+        <div className="search-city">
+          <Input type="submit" value="Submit" />
+        </div>
+      </form>
+      {/* <div className="add-city">
         <Button onClick={(e) => addHandler(e)}>Add</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

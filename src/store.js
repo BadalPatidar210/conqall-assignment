@@ -4,6 +4,8 @@ import {
   objectsListReducer,
   shortlistedListReducer,
   shortlistedReducer,
+  removeShortlistedReducer,
+  sortedListReducer,
 } from "./reducers/objectsReducers";
 import thunk from "redux-thunk";
 const initialState = {};
@@ -13,6 +15,8 @@ const reducer = combineReducers({
   updatedList: objectsDeleteReducer,
   shortlistedList: shortlistedListReducer,
   shortlist: shortlistedReducer,
+  updatedShortlistedList: removeShortlistedReducer,
+  sortedList: sortedListReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

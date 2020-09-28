@@ -10,14 +10,9 @@ function Table() {
   const objectsList = useSelector((state) => state.objectsList);
   const updatedList = useSelector((state) => state.updatedList);
   const { objects, loading, error } = objectsList;
-  // const { updatedObjects, loadingDelete, errorDelete } = updatedList;
-  // console.log("updated Objects ki list");
-  // console.log(updatedList.updatedObjects);
-  console.log("objects ki list");
-  console.log(objectsList.objects);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listObjects());
+    if (objects.length === 0) dispatch(listObjects());
     return () => {};
   }, []);
 
