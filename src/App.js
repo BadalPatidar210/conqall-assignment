@@ -5,6 +5,7 @@ import Search from "./components/Search";
 import Table from "./components/Table";
 import Shortlist from "./components/Shortlist";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import AddCity from "./components/AddCity";
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       <div className="App">
         <Header />
         <Search />
+        <AddCity />
+
         <main className="main">
           <div className="content">
             <Switch>

@@ -9,12 +9,17 @@ import "./Table.css";
 function Table() {
   const objectsList = useSelector((state) => state.objectsList);
   const updatedList = useSelector((state) => state.updatedList);
+  const newList = useSelector((state) => state.newList);
+  const { newObjectsList } = newList;
   const { objects, loading, error } = objectsList;
   const dispatch = useDispatch();
   useEffect(() => {
     if (objects.length === 0) dispatch(listObjects());
     return () => {};
   }, []);
+  useEffect(() => {
+    objectsList.objects = newObjectsList;
+  }, [newObjectsList]);
 
   const deleteHandler = (e) => {
     e.preventDefault();

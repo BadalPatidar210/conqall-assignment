@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import {
   OBJECTS_LIST_REQUEST,
   OBJECTS_LIST_SUCCESS,
@@ -14,6 +15,9 @@ import {
   SORTED_LIST_REQUEST,
   SORTED_LIST_SUCCESS,
   SORTED_LIST_FAIL,
+  ADD_OBJECT_REQUEST,
+  ADD_OBJECT_SUCCESS,
+  ADD_OBJECT_FAIL,
 } from "../constants/objectsConstant";
 import {
   OBJECT_SHORTLIST_REQUEST,
@@ -123,6 +127,18 @@ function sortedListReducer(state = { sortedResultList: [] }, action) {
   }
 }
 
+function addObjectReducer(state = { newObjectsList: [] }, action) {
+  switch (action.type) {
+    case ADD_OBJECT_REQUEST:
+      return { ...state, loading: true };
+    case ADD_OBJECT_SUCCESS:
+      return { ...state, loading: false, newObjectsList: action.payload };
+    case ADD_OBJECT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
 export {
   objectsListReducer,
   objectsDeleteReducer,
@@ -130,4 +146,5 @@ export {
   shortlistedReducer,
   removeShortlistedReducer,
   sortedListReducer,
+  addObjectReducer,
 };

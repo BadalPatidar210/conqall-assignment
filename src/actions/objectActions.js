@@ -17,6 +17,9 @@ import {
   SORTED_LIST_REQUEST,
   SORTED_LIST_SUCCESS,
   SORTED_LIST_FAIL,
+  ADD_OBJECT_REQUEST,
+  ADD_OBJECT_SUCCESS,
+  ADD_OBJECT_FAIL,
 } from "../constants/objectsConstant";
 import axios from "axios";
 
@@ -119,6 +122,21 @@ const sortedResultList = (value) => (dispatch, getState) => {
     dispatch({ type: SORTED_LIST_FAIL, error: error.message });
   }
 };
+
+const addObject = (sName, dName, cName) => (dispatch, getState) => {
+  try {
+    const { objectsList } = getState();
+    dispatch({ type: ADD_OBJECT_REQUEST, payload: [sName, dName, cName] });
+    objectsList.objects.unshift({
+      District: dName,
+      State: sName,
+      City: cName,
+    });
+    dispatch({ type: ADD_OBJECT_SUCCESS, payload: objectsList.objects });
+  } catch (error) {
+    dispatch({ type: ADD_OBJECT_FAIL, error: error.message });
+  }
+};
 export {
   listObjects,
   deleteObject,
@@ -126,4 +144,5 @@ export {
   removeShortlistObject,
   listShorlistedObjects,
   sortedResultList,
+  addObject,
 };
